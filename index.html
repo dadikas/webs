@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>発表会 KS54 – Kaizen Yoshida School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cream:  #f5f0e8;
+      --warm:   #ece5d6;
+      --brown:  #4a3728;
+      --brown2: #6b4c35;
+      --gold:   #c9a84c;
+      --muted:  #8c7560;
+      --light:  #fff9f2;
+      --petal:  #e8d5c4;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--brown);
+      font-family: 'Noto Serif JP', serif;
+      overflow-x: hidden;
+    }
+
+    /* floating petals */
+    .petals-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .petal { position: absolute; opacity: 0; animation: fall linear infinite; }
+    @keyframes fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.35; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      background:
+        radial-gradient(ellipse at 10% 0%, #d6c9b0 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 5%, #ddd0b8 0%, transparent 50%),
+        var(--cream);
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .corner {
+      position: absolute;
+      width: 200px; height: 200px;
+      background-size: contain; background-repeat: no-repeat;
+      opacity: .32;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cellipse cx='30' cy='30' rx='28' ry='18' fill='%23c9a84c' opacity='.45'/%3E%3Cellipse cx='80' cy='15' rx='22' ry='14' fill='%23b8966a' opacity='.38'/%3E%3Cellipse cx='145' cy='22' rx='18' ry='11' fill='%23c9a84c' opacity='.3'/%3E%3Cpath d='M0 0 Q55 65 125 85 Q65 108 0 200' fill='%23d4b896' opacity='.18'/%3E%3Ccircle cx='55' cy='62' r='9' fill='%23e8d5c4' opacity='.55'/%3E%3Ccircle cx='92' cy='44' r='5' fill='%23f0e0cc' opacity='.45'/%3E%3Ccircle cx='115' cy='70' r='6' fill='%23ddc9a8' opacity='.35'/%3E%3C/svg%3E");
+    }
+    .corner-tl { top:0; left:0; }
+    .corner-tr { top:0; right:0; transform:scaleX(-1); }
+    .corner-bl { bottom:0; left:0; transform:scaleY(-1); }
+    .corner-br { bottom:0; right:0; transform:scale(-1); }
+
+    .school-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(.8rem, 2vw, 1rem);
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+      animation: fadeUp .8s ease both;
+    }
+
+    .hero-title {
+      font-size: clamp(5rem, 16vw, 10rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--brown);
+      animation: fadeUp .8s .15s ease both;
+    }
+
+    .hero-klass {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(2.8rem, 9vw, 5.5rem);
+      font-weight: 700;
+      color: var(--brown2);
+      margin: .5rem 0 2rem;
+      animation: fadeUp .8s .28s ease both;
+    }
+
+    .divider {
+      width: 80px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 2.2rem;
+      animation: fadeUp .8s .38s ease both;
+    }
+
+    .event-info {
+      display: flex; flex-direction: column; gap: .75rem;
+      animation: fadeUp .8s .48s ease both;
+    }
+    .event-info p {
+      font-size: clamp(.95rem, 2.5vw, 1.15rem);
+      color: var(--brown2);
+      letter-spacing: .04em;
+    }
+    .event-info .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      color: var(--muted);
+      font-size: .85em;
+      margin-right: .45em;
+    }
+
+    .scroll-cta {
+      margin-top: 3.5rem;
+      animation: fadeUp .8s .62s ease both;
+    }
+    .scroll-cta a {
+      display: inline-flex; flex-direction: column; align-items: center; gap: .5rem;
+      text-decoration: none; color: var(--muted);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: .85rem; letter-spacing: .12em;
+      transition: color .3s;
+    }
+    .scroll-cta a:hover { color: var(--gold); }
+    .arrow {
+      width: 26px; height: 26px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      animation: bounce 1.6s ease infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:rotate(45deg) translateY(0)} 50%{transform:rotate(45deg) translateY(6px)} }
+
+    /* ── LETTER ── */
+    .letter-section {
+      position: relative; z-index: 1;
+      padding: 6rem 1.5rem 7rem;
+      background:
+        radial-gradient(ellipse at 50% 0%, #e8dfd0 0%, transparent 60%),
+        var(--warm);
+    }
+
+    .letter-card {
+      max-width: 680px; margin: 0 auto;
+      background: var(--light);
+      border: 1px solid #d4c4a8;
+      border-radius: 4px;
+      padding: clamp(2.5rem, 7vw, 4.5rem);
+      position: relative;
+      box-shadow: 0 10px 50px rgba(74,55,40,.12), 0 2px 10px rgba(74,55,40,.06);
+    }
+    .letter-card::before {
+      content: '';
+      position: absolute; inset: 12px;
+      border: 1px solid #ddd0bb;
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    .letter-greeting {
+      font-size: clamp(1.3rem, 3.5vw, 1.6rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 2.2rem;
+      color: var(--brown);
+      letter-spacing: .08em;
+    }
+
+    .letter-body {
+      font-size: clamp(.9rem, 2vw, 1.02rem);
+      line-height: 2.2;
+      color: var(--brown2);
+      text-align: justify;
+    }
+    .letter-body p + p { margin-top: 1.5em; }
+
+    .letter-sign {
+      text-align: right;
+      margin-top: 2.5rem;
+      font-size: 1rem;
+      color: var(--muted);
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 1.8;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--brown);
+      color: var(--petal);
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+    footer .foot-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; letter-spacing: .15em;
+      opacity: .9; margin-bottom: .4rem;
+    }
+    footer .foot-sub { font-size: .78rem; letter-spacing: .08em; opacity: .5; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:none; }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition: opacity .75s ease, transform .75s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+  </style>
+</head>
+<body>
+
+<div class="petals-bg" id="petals"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <p class="school-name">Kaizen Yoshida School</p>
+  <h1 class="hero-title">発表会</h1>
+  <p class="hero-klass">KS54</p>
+  <div class="divider"></div>
+
+  <div class="event-info">
+    <p><span class="label">日時</span>2026年 5月 29日（金）午後 1 時</p>
+    <p><span class="label">場所</span>602 教室 — AU CO ビル 6 階</p>
+  </div>
+
+  <div class="scroll-cta">
+    <a href="#letter">招待状を読む<span class="arrow"></span></a>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="letter-section" id="letter">
+  <div class="letter-card reveal">
+    <h2 class="letter-greeting">拝啓</h2>
+    <div class="letter-body">
+      <p>5月末の温かい季節を迎え、私たちKS54クラス一同は、これまでの1年間の日本語学習の道のりを感慨深く振り返っております。</p>
+      <p>先生方の熱心なご指導と温かい励ましのおかげで、私たちは無事にコースを修了することができました。先生方から教わった知識は、私たちの将来の大切な財産です。</p>
+      <p>つきましては、私たちの集大成として「1年発表会」を開催いたします。</p>
+      <p>先生方にご臨席いただくことは、私たちにとって最高の精神的な贈り物であり、修了の瞬間をより有意義にしてくれるものです。</p>
+      <p>お忙しいところ恐縮ですが、先生方のお越しを心よりお待ち申し上げております。</p>
+    </div>
+    <div class="letter-sign">
+      敬具<br>KS54クラス一同
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="foot-title">発表会 KS54 · 2026年 5月 29日</p>
+  <p class="foot-sub">Kaizen Yoshida School · 602 教室 · AU CO 6 階</p>
+</footer>
+
+<script>
+  // Petals
+  const colors = ['#e8c9b5','#d4b896','#c9a884','#f0dece','#e0c8a8','#f5e6d0'];
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const s = 6 + Math.random() * 10;
+    p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s*1.4}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${7+Math.random()*9}s;animation-delay:${Math.random()*10}s;border-radius:${Math.random()>.5?'50% 0 50% 0':'0 50% 0 50%'};`;
+    document.getElementById('petals').appendChild(p);
+  }
+
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
